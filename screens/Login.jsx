@@ -16,8 +16,8 @@ const Login = ({ navigation }) => {
         navigation.navigate('Dashboard');
     };
 
-    const handleRegistro = () => {
-        navigation.navigate('Registro');
+    const handleToRegister = () => {
+        navigation.navigate('Register');
     };
 
     return (
@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <Button title="Crear cuenta nueva" onPress={handleRegistro} />
+                    <Button title="Crear cuenta nueva" onPress={handleToRegister} />
                 </View>
             </View>
         </LinearGradient>

@@ -2,7 +2,8 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './screens';
 import { Dashboard } from './screens';
-import { Registro } from './screens';
+import { Register } from './screens';
+import { Outcomes } from './screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,13 +19,18 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Registro"
-          component={Registro}
+          name="Register"
+          component={Register}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Outcomes"
+          component={Outcomes}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

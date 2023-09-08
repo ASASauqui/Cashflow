@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const Registro = ({navigation}) => {
-    const [nombre, setNombre] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [contraseña, setContraseña] = useState('');
+const Register = ({navigation}) => {
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleRegistro = () => {
-        if (nombre.trim() === '' || telefono.trim() === '' || contraseña.trim() === '') {
+    const handleRegister = () => {
+        if (name.trim() === '' || phone.trim() === '' || password.trim() === '') {
             Alert.alert('Error', 'Todos los campos son obligatorios');
             return;
         }
 
-        // Aquí va la lógica de registro
-        //console.log(nombre, telefono, contraseña);
+        // Aquí va la lógica de register
 
         Alert.alert('Cuenta creada con éxito', 'Bienvenido a Cashflow');
         navigation.navigate('Login');
@@ -23,32 +22,32 @@ const Registro = ({navigation}) => {
     return (
         <LinearGradient colors={["#5893d4", "#67a7ed"]} style={styles.background}>
             <View style={styles.container}>
-                <Text style={styles.title}>Registro</Text>
+                <Text style={styles.title}>Registro de usuario</Text>
 
                 <TextInput
                     placeholder="Nombre"
                     style={styles.input}
-                    onChangeText={setNombre}
-                    value={nombre}
+                    onChangeText={setName}
+                    value={name}
                 />
 
                 <TextInput
                     placeholder="Número de teléfono"
                     style={styles.input}
                     keyboardType="phone-pad"
-                    onChangeText={setTelefono}
-                    value={telefono}
+                    onChangeText={setPhone}
+                    value={phone}
                 />
 
                 <TextInput
                     placeholder="Contraseña"
                     style={styles.input}
                     secureTextEntry={true}
-                    onChangeText={setContraseña}
-                    value={contraseña}
+                    onChangeText={setPassword}
+                    value={password}
                 />
 
-                <Button title="Crear cuenta" onPress={handleRegistro} />
+                <Button title="Crear cuenta" onPress={handleRegister} />
             </View>
         </LinearGradient>
     );
@@ -80,4 +79,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Registro;
+export default Register;

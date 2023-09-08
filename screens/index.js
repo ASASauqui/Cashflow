@@ -1,5 +1,6 @@
 import Dashboard from "./Dashboard";
 import Login from "./Login";
-import Registro from "./Registro";
+import Register from "./Register";
+import Outcomes from "./Outcomes";
 
-export { Dashboard, Login, Registro };
+export { Dashboard, Login, Register, Outcomes };
