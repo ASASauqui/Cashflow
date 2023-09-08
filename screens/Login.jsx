@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
             return;
         }
 
-        navigation.navigate('Dashboard');
+        navigation.navigate('DashboardTabs');
     };
 
     const handleRegistro = () => {
