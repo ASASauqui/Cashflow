@@ -6,7 +6,7 @@ import { useFonts } from "expo-font";
 import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-import { Login, Registro, Dashboard, Earnings } from './screens';
+import { Login, Registro, Dashboard, Earnings, Profile } from './screens';
 
 const Stack = createNativeStackNavigator(),
   Tab = createBottomTabNavigator(),
@@ -67,7 +67,7 @@ const DashboardTabs = () => {
 
         <Tab.Screen
           name="Profile"
-          component={Dashboard}
+          component={Profile}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
@@ -93,7 +93,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="DashboardTabs"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
