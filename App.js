@@ -39,8 +39,8 @@ const DashboardTabs = () => {
         screenOptions={screenOptions}
       >
         <Tab.Screen
-          name="Analytics"
-          component={Dashboard}
+          name="Movements"
+          component={Outcomes}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
@@ -51,6 +51,20 @@ const DashboardTabs = () => {
             ),
           }}
         />
+
+          <Tab.Screen
+            name="Earnings"
+            component={Earnings}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, focused }) => (
+                <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
+                  <MaterialIcons name="analytics" color={color} size={40} />
+                  {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Analytics</Text>}
+                </View>
+              ),
+            }}
+          />
 
         <Tab.Screen
           name="Dashboard"

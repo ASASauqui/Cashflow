@@ -35,7 +35,7 @@ const Profile = ({ navigation }) => {
                 </View>
                 <TouchableOpacity
                     activeOpacity={0.5}
-                    onPress={() => navigation.navigate('Dashboard')}
+                    onPress={() => navigation.navigate('Login')}
                     style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'end', gap: 10 }}
                 >
                     <FontAwesome name="power-off" size={24} color="red" />

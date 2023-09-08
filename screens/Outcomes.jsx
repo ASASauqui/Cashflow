@@ -12,10 +12,10 @@ const Outcomes = () => {
         <LinearGradient colors={["#5893d4", "#67a7ed"]} style={styles.background}>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Dashboard')}>
+                    {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Dashboard')}>
                         <Text style={styles.buttonText}>⌂</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Gastos</Text>
+                    </TouchableOpacity> */}
+                    <Text style={styles.title}>Egresos</Text>
                 </View>
                 <ScrollView style={styles.moves_container}>
                     {
@@ -54,9 +54,10 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
-        fontWeight: 'bold',
+        fontFamily: 'Bold',
         color: 'white',
-        marginBottom: 20
+        marginBottom: 20,
+
     },
     moves_container: {
         width: '90%',
