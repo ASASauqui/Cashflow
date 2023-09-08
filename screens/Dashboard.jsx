@@ -9,8 +9,8 @@ const Dashboard = () => {
         <LinearGradient colors={["#5893d4", "#67a7ed"]} style={styles.background}>
             <View style={styles.container}>
                 <View style={styles.balance_info}>
-                    <Text style={styles.balance_info.hello}>Hola de nuevo, Usuario</Text>
-                    <Text style={styles.balance_info.balance}>$12,345.<Text style={styles.balance_info.balance.decimals}>00</Text></Text>
+                    <Text style={styles.balance_info.hello}>Hola de nuevo, Usuario.</Text>
+                    <Text style={styles.balance_info.balance}>$12,345<Text style={styles.balance_info.dec}>.00</Text></Text>
 
                     <Text style={styles.balance_info.incomes}>Ingresos: $1,234.00</Text>
                     <ProgressBar progress={0.2} animated style={styles.balance_info.bar} color="#7DE2D1" unfilledColor="white" height={15} width={350}/>
@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
         padding: 20,
         marginTop: 50,
         hello: {
+            fontFamily: 'Bold',
             fontSize: 20,
-            fontWeight: 'bold',
             color: 'white',
-            marginBottom: 20
+            marginBottom: 20,
         },
         balance_text: {
             fontSize: 20,
@@ -68,21 +68,23 @@ const styles = StyleSheet.create({
         balance: {
             fontSize: 50,
             color: 'white',
-            fontWeight: 'bold',
-            decimals: {
-                fontSize: 20,
-                color: 'white',
-                fontWeight: 'bold',
-            }
+            fontFamily: 'Bold',
+        },
+        dec: {
+            fontSize: 20,
+            color: 'white',
+            fontFamily: 'Bold',
         },
         incomes: {
             fontSize: 15,
             color: 'white',
             marginTop: 50,
+            fontFamily: 'Regular',
         },
         outcomes: {
             fontSize: 15,
             color: 'white',
+            fontFamily: 'Regular',
         },
         bar: {
             marginTop: 5,
@@ -100,11 +102,21 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         padding: 30,
         flex: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 18,
+
+        elevation: 5,
         title: {
             fontSize: 30,
             color: 'black',
-            fontWeight: 'bold',
-            marginBottom: 20
+            fontFamily: 'Bold',
+            marginBottom: 20,
+            textAlign: 'center',
         },
         moves: {
             flex: 1,
@@ -122,14 +134,17 @@ const styles = StyleSheet.create({
                     right: 0,
                     margin: 5,
                     fontSize: 10,
-                    fontStyle: 'italic'
+                    fontFamily: 'Regular',
+                    fontStyle: 'italic',
+                    color: 'gray'
                 },
                 concept: {
                     fontSize: 15,
+                    fontFamily: 'Regular',
                 },
                 amount: {
                     fontSize: 15,
-                    fontWeight: 'bold',
+                    fontFamily: 'Bold',
                 }
 
             }
@@ -142,63 +157,63 @@ const moves = [
         id: 1,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'income'
     },
     {
         id: 2,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'outcome'
     },
     {
         id: 3,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'income'
     },
     {
         id: 4,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'outcome'
     },
     {
         id: 5,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'income'
     },
     {
         id: 6,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'outcome'
     },
     {
         id: 7,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'outcome'
     },
     {
         id: 8,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'income'
     },
     {
         id: 9,
         concept: 'Testing',
         date: '2021-09-01',
-        amount: 1000.00,
+        amount: "1000.00",
         type: 'outcome'
     },
 ]
