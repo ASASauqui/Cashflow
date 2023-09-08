@@ -1,6 +1,7 @@
 import Login from "./Login";
-import Registro from "./Registro";
+import Register from "./Register";
+import Outcomes from "./Outcomes";
 import Earnings from "./Earnings";
 import Dashboard from "./Dashboard";
 
-export { Dashboard, Login, Registro, Earnings };
+export { Dashboard, Login, Register, Earnings, Outcomes };
