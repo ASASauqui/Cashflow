@@ -1,12 +1,13 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
 import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-import { Login, Registro, Dashboard, Earnings, Profile } from './screens';
+import { Login, Register, Dashboard, Earnings, Outcomes, Profile } from './screens';
 
 const Stack = createNativeStackNavigator(),
   Tab = createBottomTabNavigator(),
@@ -93,7 +94,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="DashboardTabs"
+        initialRouteName="Login"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
@@ -105,12 +106,16 @@ export default function App() {
           component={Login}
         />
         <Stack.Screen
-          name="Registro"
-          component={Registro}
+          name="Register"
+          component={Register}
         />
         <Stack.Screen
           name="DashboardTabs"
           component={DashboardTabs}
+        />
+        <Stack.Screen
+          name="Outcomes"
+          component={Outcomes}
         />
       </Stack.Navigator>
     </NavigationContainer>
