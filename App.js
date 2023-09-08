@@ -1,13 +1,86 @@
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { StyleSheet, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
+import { BlurView } from 'expo-blur';
+import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-import { Earnings } from './screens';
-import { Login } from './screens';
-import { Dashboard } from './screens';
-import { Registro } from './screens';
+import { Login, Registro, Dashboard, Earnings } from './screens';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator(),
+  Tab = createBottomTabNavigator(),
+  inactiveItemColor = 'white',
+  activeItemColor = '#007aff',
+  screenOptions = {
+    tabBarShowLabel: false,
+    tabBarInactiveTintColor: inactiveItemColor,
+    tabBarActiveTintColor: activeItemColor,
+    tabBarStyle: {
+      position: "absolute",
+      height: 70,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      borderTopLeftRadius: 100,
+      borderTopRightRadius: 100,
+      overflow: 'hidden',
+    },
+    tabBarBackground: () => (
+      <BlurView tint="light" intensity={0} style={styles.navbar_blur} blurReductionFactor={0} />
+    )
+  };
+
+const DashboardTabs = () => {
+  return (
+      <Tab.Navigator
+        initialRouteName="Dashboard"
+        screenOptions={screenOptions}
+      >
+        <Tab.Screen
+          name="Analytics"
+          component={Dashboard}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
+                <MaterialIcons name="analytics" color={color} size={40} />
+                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Analytics</Text>}
+              </View>
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
+                <MaterialCommunityIcons name="view-dashboard" color={color} size={40} />
+                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Dashboard</Text>}
+              </View>
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Profile"
+          component={Dashboard}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
+                <Ionicons name="person" color={color} size={40} />
+                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Profile</Text>}
+              </View>
+            ),
+          }}
+        />
+      </Tab.Navigator>
+  );
+};
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,8 +96,8 @@ export default function App() {
         initialRouteName="Login"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen 
-          name="Ahorros" 
+        <Stack.Screen
+          name="Ahorros"
           component={Earnings}
         />
         <Stack.Screen
@@ -36,10 +109,39 @@ export default function App() {
           component={Registro}
         />
         <Stack.Screen
-          name="Dashboard"
-          component={Dashboard}
+          name="DashboardTabs"
+          component={DashboardTabs}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
-} 
+};
+
+const styles = StyleSheet.create({
+  navbar_blur: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#5c98db80'
+  },
+  navbar_item: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderColor: 'white',
+      borderStyle: 'solid',
+      borderBottomWidth: 5,
+  },
+  navbar_item_active: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopRightRadius: 100,
+      borderTopLeftRadius: 100,
+      backgroundColor: 'white',
+  }
+});
