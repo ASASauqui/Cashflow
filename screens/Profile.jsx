@@ -16,10 +16,10 @@ const Profile = ({ navigation }) => {
                     <Image source={{ uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thefamouspeople.com%2Fprofiles%2Fimages%2Fbad-bunny-3.jpg&f=1&nofb=1&ipt=fe9ba359589fa7a32778b79f5ddff2060a4574d5e3874333075a6ecb6197e40b&ipo=images' }} style={styles.profile_image} />
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Bad Bunny</Text>
+                    <Text style={{ fontSize: 20, fontFamily: 'Bold' }}>Bad Bunny</Text>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 9 }}>
                         <FontAwesome name="phone" size={20} color="gray" />
-                        <Text style={{ color: 'gray', fontSize: 15 }}>+52 (123) 456 7890</Text>
+                        <Text style={{ color: 'gray', fontSize: 15, fontFamily: 'Regular' }}>+52 (123) 456 7890</Text>
                     </View>
                 </View>
 
@@ -30,7 +30,7 @@ const Profile = ({ navigation }) => {
                         style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}
                     >
                         <Ionicons name="settings" size={24} color="#007aff" />
-                        <Text style={{ fontSize: 20, color: '#007aff', fontWeight: 'bold' }}>Ajustes</Text>
+                        <Text style={{ fontSize: 20, color: '#007aff', fontFamily: 'Bold' }}>Ajustes</Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity
@@ -39,7 +39,7 @@ const Profile = ({ navigation }) => {
                     style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'end', gap: 10 }}
                 >
                     <FontAwesome name="power-off" size={24} color="red" />
-                    <Text style={{ fontSize: 20, color: 'red', fontWeight: 'bold' }}>Cerrar sesión</Text>
+                    <Text style={{ fontSize: 20, color: 'red', fontFamily: 'Bold' }}>Cerrar sesión</Text>
                 </TouchableOpacity>
             </View>
         </View>

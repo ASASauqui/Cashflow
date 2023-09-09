@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from "../assets/img/logo2.png"
+import { CustomButton } from '../components';
 
 const Login = ({ navigation }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,13 +42,9 @@ const Login = ({ navigation }) => {
                     value={password}
                 />
 
-                <View style={styles.buttonContainer}>
-                    <Button title="Iniciar sesión" onPress={handleLogin} />
-                </View>
+                <CustomButton title='Iniciar Sesión' onPress={handleLogin} type='white'/>
+                <CustomButton title='Crear cuenta nueva' onPress={handleToRegister} type='white'/>
 
-                <View style={styles.buttonContainer}>
-                    <Button title="Crear cuenta nueva" onPress={handleToRegister} />
-                </View>
             </View>
         </LinearGradient>
     );
@@ -72,15 +69,16 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 10,
         backgroundColor: 'white',
         marginBottom: 15,
         fontSize: 16,
+        fontFamily: 'Regular',
     },
     logo: {
         width: 300,
         height: 300,
-        marginBottom: 20,
+        marginBottom: 0,
         resizeMode: 'contain',
     },
     buttonContainer: {

@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from "expo-font";
 import { BlurView } from 'expo-blur';
-import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 
 import { Login, Register, Dashboard, Earnings, Outcomes, Profile } from './screens';
 
@@ -23,8 +23,8 @@ const Stack = createNativeStackNavigator(),
       bottom: 0,
       right: 0,
       left: 0,
-      borderTopLeftRadius: 100,
-      borderTopRightRadius: 100,
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
       overflow: 'hidden',
     },
     tabBarBackground: () => (
@@ -39,28 +39,28 @@ const DashboardTabs = () => {
         screenOptions={screenOptions}
       >
         <Tab.Screen
-          name="Movements"
+          name="Movimientos"
           component={Outcomes}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
-                <MaterialIcons name="analytics" color={color} size={40} />
-                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Analytics</Text>}
+                <MaterialIcons name="compare-arrows" color={color} size={40} />
+                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Movimientos</Text>}
               </View>
             ),
           }}
         />
 
           <Tab.Screen
-            name="Earnings"
+            name="Ahorros"
             component={Earnings}
             options={{
               headerShown: false,
               tabBarIcon: ({ color, focused }) => (
-                <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
-                  <MaterialIcons name="analytics" color={color} size={40} />
-                  {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Analytics</Text>}
+                <View style={focused ? styles.navbar_item_active : styles.navbar_item}>              
+                  <FontAwesome5 name="piggy-bank" color={color} size={35}/>
+                  {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Ahorros</Text>}
                 </View>
               ),
             }}
@@ -81,14 +81,14 @@ const DashboardTabs = () => {
         />
 
         <Tab.Screen
-          name="Profile"
+          name="Perfil"
           component={Profile}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <View style={focused ? styles.navbar_item_active : styles.navbar_item}>
                 <Ionicons name="person" color={color} size={40} />
-                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Profile</Text>}
+                {focused && <Text style={{color: activeItemColor, fontSize: 10}}>Perfil</Text>}
               </View>
             ),
           }}

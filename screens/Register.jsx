@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { CustomButton } from '../components';
 
 const Register = ({navigation}) => {
     const [name, setName] = useState('');
@@ -16,6 +17,11 @@ const Register = ({navigation}) => {
         // Aquí va la lógica de register
 
         Alert.alert('Cuenta creada con éxito', 'Bienvenido a Cashflow');
+        navigation.navigate('Login');
+    };
+
+
+    const handleLogin = () => {
         navigation.navigate('Login');
     };
 
@@ -47,7 +53,8 @@ const Register = ({navigation}) => {
                     value={password}
                 />
 
-                <Button title="Crear cuenta" onPress={handleRegister} />
+                <CustomButton title='Crear cuenta' onPress={handleRegister} type='white'/>
+                <CustomButton title='Iniciar sesión' onPress={handleLogin} type='white'/>
             </View>
         </LinearGradient>
     );
@@ -65,17 +72,18 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
-        fontWeight: 'bold',
+        fontFamily: 'Bold',
         color: 'white',
         marginBottom: 20
     },
     input: {
         width: '100%',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 10,
         backgroundColor: 'white',
         marginBottom: 15,
         fontSize: 16,
+        fontFamily: 'Regular',
     },
 });
 
