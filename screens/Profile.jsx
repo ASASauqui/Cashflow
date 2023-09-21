@@ -2,9 +2,17 @@ import React from 'react'
 import { View, Text, ScrollView, StyleSheet, Image, Button, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
+
 
 
 const Profile = ({ navigation }) => {
+
+    const handleLogout = async () => {
+        await SecureStore.deleteItemAsync('token');
+        navigation.navigate('Login');
+    }
+
     return (
         <View style={styles.background}>
             {/* <View>
@@ -39,7 +47,7 @@ const Profile = ({ navigation }) => {
                     style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'end', gap: 10 }}
                 >
                     <FontAwesome name="power-off" size={24} color="red" />
-                    <Text style={{ fontSize: 20, color: 'red', fontFamily: 'Bold' }}>Cerrar sesión</Text>
+                    <Text style={{ fontSize: 20, color: 'red', fontFamily: 'Bold' }} onPress={handleLogout}>Cerrar sesión</Text>
                 </TouchableOpacity>
             </View>
         </View>
