@@ -1,20 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native'; 
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, StyleSheet, Alert, Image } from 'react-native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import logo from "../assets/img/logo2.png"
 import { CustomButton } from '../components';
+import { login, checkToken } from '../api/users';
+import * as SecureStore from 'expo-secure-store';
 
 const Login = ({ navigation }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
+    useEffect(() => {
+        SecureStore.getItemAsync('token').then((token) => {
+            if (token) {
+                console.log(token);
+                checkUserToken(token);
+            }
+        });
+    }, []);
+
+    const checkUserToken = async ( token ) => {
+        try {
+            const res = await checkToken(token);
+            if(res.data !== undefined ){
+                console.log(res.data);
+                navigation.navigate('DashboardTabs');   
+            }
+        } catch (error) {
+            console.log(error.response.data.message);
+            navigation.navigate('Login');  
+        }
+    }
+
+    const handleLogin = async () => {
         if (phoneNumber.trim() === '' || password.trim() === '') {
             Alert.alert('Error', 'Ambos campos son obligatorios');
             return;
         }
 
-        navigation.navigate('DashboardTabs');
+        try {
+            const body = {
+                phone: phoneNumber,
+                password: password,
+            }
+
+            const res = await login(body);
+
+
+            if(res.data !== undefined ){
+                console.log(res.data.data.token);
+                await SecureStore.setItemAsync('token', res.data.data.token);
+                setPassword('');
+                setPhoneNumber('');
+                Alert.alert('Sesión iniciada con éxito', 'Bienvenido a Cashflow');
+                navigation.navigate('DashboardTabs');   
+            }
+        } catch (error) {
+            console.log(error.response.data.message);
+            Alert.alert('Error', error.response.data.message);
+        }
     };
 
     const handleToRegister = () => {
