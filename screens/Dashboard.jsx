@@ -8,9 +8,11 @@ import { getMoves } from '../api/moves';
 import { getUserCashInfo, updateIncomes, updateOutcomes } from '../api/userCashInfo';
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const Dashboard = () => {
-    const [token, setToken] = useState(''),
+    const isFocused = useIsFocused(),
+        [token, setToken] = useState(''),
         [userInfo, setUserInfo] = useState({}),
         [userCashInfo, setUserCashInfo] = useState({}),
         [incomesOutomesSum, setIncomesOutomesSum] = useState(0),
@@ -69,7 +71,7 @@ const Dashboard = () => {
                 checkUserToken(token);
             }
         });
-    }, []);
+    }, [isFocused]);
 
     useEffect(() => {
         if (token !== '') {
@@ -77,7 +79,7 @@ const Dashboard = () => {
             handleGetUserInfo();
             handleGetMoves();
         }
-    }, [token]);
+    }, [isFocused, token]);
 
     return (
         <LinearGradient colors={["#5893d4", "#67a7ed"]} style={styles.background}>
@@ -237,71 +239,71 @@ const styles = StyleSheet.create({
     }
 });
 
-const moves1 = [
-    {
-        id: 1,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'income'
-    },
-    {
-        id: 2,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'outcome'
-    },
-    {
-        id: 3,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'income'
-    },
-    {
-        id: 4,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'outcome'
-    },
-    {
-        id: 5,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'income'
-    },
-    {
-        id: 6,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'outcome'
-    },
-    {
-        id: 7,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'outcome'
-    },
-    {
-        id: 8,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'income'
-    },
-    {
-        id: 9,
-        concept: 'Testing',
-        date: '2021-09-01',
-        amount: "1000.00",
-        type: 'outcome'
-    },
-]
+// const moves = [
+//     {
+//         id: 1,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'income'
+//     },
+//     {
+//         id: 2,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'outcome'
+//     },
+//     {
+//         id: 3,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'income'
+//     },
+//     {
+//         id: 4,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'outcome'
+//     },
+//     {
+//         id: 5,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'income'
+//     },
+//     {
+//         id: 6,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'outcome'
+//     },
+//     {
+//         id: 7,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'outcome'
+//     },
+//     {
+//         id: 8,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'income'
+//     },
+//     {
+//         id: 9,
+//         concept: 'Testing',
+//         date: '2021-09-01',
+//         amount: "1000.00",
+//         type: 'outcome'
+//     },
+// ]
 
 export default Dashboard;
 
