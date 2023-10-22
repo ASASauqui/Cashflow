@@ -51,7 +51,7 @@ const Outcomes = () => {
             <View style={styles.container}>
                 {
                     move === 'incomes' ? incomesPage() : outcomesPage()
-                }                
+                }
             </View>
         </LinearGradient>
     )
