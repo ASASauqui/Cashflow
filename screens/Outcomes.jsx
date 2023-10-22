@@ -6,9 +6,11 @@ import { checkToken } from '../api/users';
 import { getMoves } from '../api/moves';
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const Outcomes = () => {
-    const [token, setToken] = useState(''),
+    const isFocused = useIsFocused(),
+        [token, setToken] = useState(''),
         [moves, setMoves] = useState([]),
         [move, setMove] = useState('incomes');
 
@@ -32,7 +34,7 @@ const Outcomes = () => {
         try {
             const res = await getMoves(token);
             if(res.data !== undefined ){
-                console.log(res.data);
+                // console.log(res.data);
                 setMoves(res.data);
             }
         } catch (error) {
@@ -46,13 +48,13 @@ const Outcomes = () => {
                 checkUserToken(token);
             }
         });
-    }, []);
+    }, [isFocused]);
 
     useEffect(() => {
         if (token !== '') {
             handleGetMoves();
         }
-    }, [token]);
+    }, [isFocused, token]);
 
     const incomesPage = () => {
         return(
