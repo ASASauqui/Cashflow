@@ -1,24 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { checkToken } from '../api/users';
+import { getMoves } from '../api/moves';
+import * as SecureStore from 'expo-secure-store';
+import { Alert } from 'react-native';
 
 const Outcomes = () => {
-    const [move, setMove] = useState('incomes');
+    const [token, setToken] = useState(''),
+        [moves, setMoves] = useState([]),
+        [move, setMove] = useState('incomes');
 
     const outcomes = moves.filter(move => move.type === 'outcome');
     const incomes = moves.filter(move => move.type === 'income');
     const navigation = useNavigation();
 
+    const checkUserToken = async ( token ) => {
+        try {
+            const res = await checkToken(token);
+            if(res.data !== undefined ){
+                setToken(token);
+            }
+        } catch (error) {
+            Alert.alert('Error', error.response.data.message);
+            navigation.navigate('Login');
+        }
+    };
+
+    const handleGetMoves = async () => {
+        try {
+            const res = await getMoves(token);
+            if(res.data !== undefined ){
+                console.log(res.data);
+                setMoves(res.data);
+            }
+        } catch (error) {
+            Alert.alert('Error', error.response.data.message);
+        }
+    };
+
+    useEffect(() => {
+        SecureStore.getItemAsync('token').then((token) => {
+            if (token) {
+                checkUserToken(token);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        if (token !== '') {
+            handleGetMoves();
+        }
+    }, [token]);
+
     const incomesPage = () => {
         return(
             <ScrollView style={styles.moves_container}>
                 {
-                    incomes.map((outcome) => (
-                        <View key={outcome.id} style={styles.move}>
-                            <Text style={styles.moveDate}>{outcome.date}</Text>
-                            <Text style={styles.moveConcept}>{outcome.concept}</Text>
-                            <Text style={styles.moveAmount}>${outcome.amount}</Text>
+                    incomes.map((income) => (
+                        <View key={income._id} style={styles.move}>
+                            <Text style={styles.moveDate}>{income.createdAt.split('T')[0]}</Text>
+                            <Text style={styles.moveConcept}>{income.concept}</Text>
+                            <Text style={styles.moveAmount}>${income.amount.toLocaleString('en-US')}</Text>
                         </View>
                     ))
                 }
@@ -31,10 +75,10 @@ const Outcomes = () => {
             <ScrollView style={styles.moves_container}>
                 {
                     outcomes.map((outcome) => (
-                        <View key={outcome.id} style={styles.move}>
-                            <Text style={styles.moveDate}>{outcome.date}</Text>
+                        <View key={outcome._id} style={styles.move}>
+                            <Text style={styles.moveDate}>{outcome.createdAt.split('T')[0]}</Text>
                             <Text style={styles.moveConcept}>{outcome.concept}</Text>
-                            <Text style={styles.moveAmount}>-${outcome.amount}</Text>
+                            <Text style={styles.moveAmount}>-${outcome.amount.toLocaleString('en-US')}</Text>
                         </View>
                     ))
                 }
@@ -78,7 +122,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontFamily: 'Bold',
-        color: 'white',
+        backgroundColor: 'white',
+        color: '#5893d4',
         marginBottom: 20,
         textAlign: 'center',
         width: '50%',
@@ -88,8 +133,7 @@ const styles = StyleSheet.create({
     title_active: {
         fontSize: 32,
         fontFamily: 'Bold',
-        backgroundColor: 'white',
-        color: '#5893d4',
+        color: 'white',
         marginBottom: 20,
         width: '50%',
         textAlign: 'center',
@@ -140,164 +184,162 @@ const styles = StyleSheet.create({
     },
 });
 
-const moves = [
-    {
-        id: 1,
-        concept: 'Amazon',
-        date: '23-02-2023',
-        amount: 450.00,
-        type: 'outcome'
-    },
-    {
-        id: 2,
-        concept: 'Alquiler',
-        date: '11-06-2023',
-        amount: 1000.00,
-        type: 'outcome'
-    },
-    {
-        id: 3,
-        concept: 'Rappi Eats',
-        date: '05-04-2023',
-        amount: 140.00,
-        type: 'outcome'
-    },
-    {
-        id: 4,
-        concept: 'Caffenio App',
-        date: '16-01-2023',
-        amount: 345.00,
-        type: 'outcome'
-    },
-    {
-        id: 5,
-        concept: 'Universidad UP',
-        date: '27-10-2023',
-        amount: 3455.00,
-        type: 'outcome'
-    },
-    {
-        id: 6,
-        concept: 'Nintendo Eshop',
-        date: '09-08-2023',
-        amount: 1400.00,
-        type: 'outcome'
-    },
-    {
-        id: 7,
-        concept: 'Tacos Bora',
-        date: '03-07-2023',
-        amount: 123.50,
-        type: 'outcome'
-    },
-    {
-        id: 8,
-        concept: 'Las Alitas',
-        date: '14-12-2023',
-        amount: 683.00,
-        type: 'outcome'
-    },
-    {
-        id: 9,
-        concept: 'HyM Altaria',
-        date: '28-05-2023',
-        amount: 425.00,
-        type: 'outcome'
-    },
-    {
-        id: 10,
-        concept: 'Toyota Ags',
-        date: '29-02-2023',
-        amount: 6000.00,
-        type: 'outcome'
-    },
-    {
-        id: 11,
-        concept: 'Pandora',
-        date: '15-12-2022',
-        amount: 1299.00,
-        type: 'outcome'
-    },
-    {
-        id: 1,
-        concept: 'Amazon',
-        date: '23-02-2023',
-        amount: 450.00,
-        type: 'income'
-    },
-    {
-        id: 2,
-        concept: 'Alquiler',
-        date: '11-06-2023',
-        amount: 1000.00,
-        type: 'income'
-    },
-    {
-        id: 3,
-        concept: 'Rappi Eats',
-        date: '05-04-2023',
-        amount: 140.00,
-        type: 'income'
-    },
-    {
-        id: 4,
-        concept: 'Caffenio App',
-        date: '16-01-2023',
-        amount: 345.00,
-        type: 'income'
-    },
-    {
-        id: 5,
-        concept: 'Universidad UP',
-        date: '27-10-2023',
-        amount: 3455.00,
-        type: 'income'
-    },
-    {
-        id: 6,
-        concept: 'Nintendo Eshop',
-        date: '09-08-2023',
-        amount: 1400.00,
-        type: 'income'
-    },
-    {
-        id: 7,
-        concept: 'Tacos Bora',
-        date: '03-07-2023',
-        amount: 123.50,
-        type: 'income'
-    },
-    {
-        id: 8,
-        concept: 'Las Alitas',
-        date: '14-12-2023',
-        amount: 683.00,
-        type: 'income'
-    },
-    {
-        id: 9,
-        concept: 'HyM Altaria',
-        date: '28-05-2023',
-        amount: 425.00,
-        type: 'income'
-    },
-    {
-        id: 10,
-        concept: 'Toyota Ags',
-        date: '29-02-2023',
-        amount: 6000.00,
-        type: 'income'
-    },
-    {
-        id: 11,
-        concept: 'Pandora',
-        date: '15-12-2022',
-        amount: 1299.00,
-        type: 'income'
-    },
+// const moves = [
+//     {
+//         id: 1,
+//         concept: 'Amazon',
+//         date: '23-02-2023',
+//         amount: 450.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 2,
+//         concept: 'Alquiler',
+//         date: '11-06-2023',
+//         amount: 1000.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 3,
+//         concept: 'Rappi Eats',
+//         date: '05-04-2023',
+//         amount: 140.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 4,
+//         concept: 'Caffenio App',
+//         date: '16-01-2023',
+//         amount: 345.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 5,
+//         concept: 'Universidad UP',
+//         date: '27-10-2023',
+//         amount: 3455.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 6,
+//         concept: 'Nintendo Eshop',
+//         date: '09-08-2023',
+//         amount: 1400.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 7,
+//         concept: 'Tacos Bora',
+//         date: '03-07-2023',
+//         amount: 123.50,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 8,
+//         concept: 'Las Alitas',
+//         date: '14-12-2023',
+//         amount: 683.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 9,
+//         concept: 'HyM Altaria',
+//         date: '28-05-2023',
+//         amount: 425.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 10,
+//         concept: 'Toyota Ags',
+//         date: '29-02-2023',
+//         amount: 6000.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 11,
+//         concept: 'Pandora',
+//         date: '15-12-2022',
+//         amount: 1299.00,
+//         type: 'outcome'
+//     },
+//     {
+//         id: 1,
+//         concept: 'Amazon',
+//         date: '23-02-2023',
+//         amount: 450.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 2,
+//         concept: 'Alquiler',
+//         date: '11-06-2023',
+//         amount: 1000.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 3,
+//         concept: 'Rappi Eats',
+//         date: '05-04-2023',
+//         amount: 140.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 4,
+//         concept: 'Caffenio App',
+//         date: '16-01-2023',
+//         amount: 345.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 5,
+//         concept: 'Universidad UP',
+//         date: '27-10-2023',
+//         amount: 3455.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 6,
+//         concept: 'Nintendo Eshop',
+//         date: '09-08-2023',
+//         amount: 1400.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 7,
+//         concept: 'Tacos Bora',
+//         date: '03-07-2023',
+//         amount: 123.50,
+//         type: 'income'
+//     },
+//     {
+//         id: 8,
+//         concept: 'Las Alitas',
+//         date: '14-12-2023',
+//         amount: 683.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 9,
+//         concept: 'HyM Altaria',
+//         date: '28-05-2023',
+//         amount: 425.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 10,
+//         concept: 'Toyota Ags',
+//         date: '29-02-2023',
+//         amount: 6000.00,
+//         type: 'income'
+//     },
+//     {
+//         id: 11,
+//         concept: 'Pandora',
+//         date: '15-12-2022',
+//         amount: 1299.00,
+//         type: 'income'
+//     },
 
-];
-
-
+// ];
 
 export default Outcomes

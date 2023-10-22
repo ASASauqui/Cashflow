@@ -55,7 +55,7 @@ const Dashboard = () => {
         try {
             const res = await getMoves(token);
             if(res.data !== undefined ){
-                console.log(res.data);
+                // console.log(res.data);
                 setMoves(res.data);
             }
         } catch (error) {
