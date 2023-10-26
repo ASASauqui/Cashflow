@@ -34,7 +34,15 @@ const Outcomes = () => {
         try {
             const res = await getMoves(token);
             if(res.data !== undefined ){
-                // console.log(res.data);
+                res.data.sort((a, b) => {
+                    if (a.createdAt > b.createdAt) {
+                        return -1;
+                    }
+                    if (a.createdAt < b.createdAt) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 setMoves(res.data);
             }
         } catch (error) {
@@ -186,162 +194,4 @@ const styles = StyleSheet.create({
     },
 });
 
-// const moves = [
-//     {
-//         id: 1,
-//         concept: 'Amazon',
-//         date: '23-02-2023',
-//         amount: 450.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 2,
-//         concept: 'Alquiler',
-//         date: '11-06-2023',
-//         amount: 1000.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 3,
-//         concept: 'Rappi Eats',
-//         date: '05-04-2023',
-//         amount: 140.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 4,
-//         concept: 'Caffenio App',
-//         date: '16-01-2023',
-//         amount: 345.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 5,
-//         concept: 'Universidad UP',
-//         date: '27-10-2023',
-//         amount: 3455.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 6,
-//         concept: 'Nintendo Eshop',
-//         date: '09-08-2023',
-//         amount: 1400.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 7,
-//         concept: 'Tacos Bora',
-//         date: '03-07-2023',
-//         amount: 123.50,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 8,
-//         concept: 'Las Alitas',
-//         date: '14-12-2023',
-//         amount: 683.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 9,
-//         concept: 'HyM Altaria',
-//         date: '28-05-2023',
-//         amount: 425.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 10,
-//         concept: 'Toyota Ags',
-//         date: '29-02-2023',
-//         amount: 6000.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 11,
-//         concept: 'Pandora',
-//         date: '15-12-2022',
-//         amount: 1299.00,
-//         type: 'outcome'
-//     },
-//     {
-//         id: 1,
-//         concept: 'Amazon',
-//         date: '23-02-2023',
-//         amount: 450.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 2,
-//         concept: 'Alquiler',
-//         date: '11-06-2023',
-//         amount: 1000.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 3,
-//         concept: 'Rappi Eats',
-//         date: '05-04-2023',
-//         amount: 140.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 4,
-//         concept: 'Caffenio App',
-//         date: '16-01-2023',
-//         amount: 345.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 5,
-//         concept: 'Universidad UP',
-//         date: '27-10-2023',
-//         amount: 3455.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 6,
-//         concept: 'Nintendo Eshop',
-//         date: '09-08-2023',
-//         amount: 1400.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 7,
-//         concept: 'Tacos Bora',
-//         date: '03-07-2023',
-//         amount: 123.50,
-//         type: 'income'
-//     },
-//     {
-//         id: 8,
-//         concept: 'Las Alitas',
-//         date: '14-12-2023',
-//         amount: 683.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 9,
-//         concept: 'HyM Altaria',
-//         date: '28-05-2023',
-//         amount: 425.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 10,
-//         concept: 'Toyota Ags',
-//         date: '29-02-2023',
-//         amount: 6000.00,
-//         type: 'income'
-//     },
-//     {
-//         id: 11,
-//         concept: 'Pandora',
-//         date: '15-12-2022',
-//         amount: 1299.00,
-//         type: 'income'
-//     },
-
-// ];
-
-export default Outcomes
+export default Outcomes;
