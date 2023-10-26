@@ -9,9 +9,11 @@ import { getUserCashInfo, updateIncomes, updateOutcomes } from '../api/userCashI
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const Dashboard = () => {
     const isFocused = useIsFocused(),
+        navigation = useNavigation();
         [token, setToken] = useState(''),
         [userInfo, setUserInfo] = useState({}),
         [userCashInfo, setUserCashInfo] = useState({}),
@@ -23,7 +25,6 @@ const Dashboard = () => {
             const res = await checkToken(token);
             if(res.data !== undefined ){
                 setToken(token);
-                getUserCashInfo(token);
             }
         } catch (error) {
             navigation.navigate('Login');
@@ -39,7 +40,7 @@ const Dashboard = () => {
                 setIncomesOutomesSum(res.data.incomes + res.data.outcomes);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "No se pudo obtener la información de tu cuenta.")
         }
     },
     handleGetUserInfo = async () => {
@@ -50,7 +51,7 @@ const Dashboard = () => {
                 setUserInfo(res.data);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "No se pudo obtener la información de tu cuenta.");
         }
     },
     handleGetMoves = async () => {
@@ -61,7 +62,7 @@ const Dashboard = () => {
                 setMoves(res.data);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "No se pudo obtener la información de tu cuenta.");
         }
     };
 

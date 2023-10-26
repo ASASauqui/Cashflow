@@ -19,7 +19,7 @@ const Profile = ({ navigation }) => {
                 setToken(token);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "El token es inválido");
             navigation.navigate('Login');
         }
     },
@@ -31,7 +31,7 @@ const Profile = ({ navigation }) => {
                 setUserInfo(res.data);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "No se pudieron obtener los datos del usuario");
         }
     },
     handleLogout = async () => {
