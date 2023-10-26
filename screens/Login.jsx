@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
             }
         } catch (error) {
             console.log(error.response.data.message);
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "Hubo un error al iniciar sesión");
         }
     };
 

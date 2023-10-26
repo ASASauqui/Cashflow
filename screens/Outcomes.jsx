@@ -25,7 +25,7 @@ const Outcomes = () => {
                 setToken(token);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "El token es inválido");
             navigation.navigate('Login');
         }
     };
@@ -38,7 +38,7 @@ const Outcomes = () => {
                 setMoves(res.data);
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            Alert.alert('Error', "No se pudieron obtener los movimientos");
         }
     };
 
