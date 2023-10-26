@@ -24,11 +24,11 @@ const Login = ({ navigation }) => {
             const res = await checkToken(token);
             if(res.data !== undefined ){
                 console.log(res.data);
-                navigation.navigate('DashboardTabs');   
+                navigation.navigate('DashboardTabs');
             }
         } catch (error) {
             console.log(error.response.data.message);
-            navigation.navigate('Login');  
+            navigation.navigate('Login');
         }
     }
 

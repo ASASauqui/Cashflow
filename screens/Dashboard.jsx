@@ -4,21 +4,24 @@ import {LinearGradient} from 'expo-linear-gradient';
 import ProgressBar from 'react-native-progress/Bar';
 import { checkToken } from '../api/users';
 import { getUserInfo } from '../api/userInfo';
-import { getMoves } from '../api/moves';
-import { getUserCashInfo, updateIncomes, updateOutcomes } from '../api/userCashInfo';
+import { getMoves, createMove } from '../api/moves';
+import { getUserCashInfo } from '../api/userCashInfo';
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import { CreateMovementDialog } from '../components';
+import { CustomButton } from '../components';
 
 const Dashboard = () => {
     const isFocused = useIsFocused(),
-        navigation = useNavigation();
+        navigation = useNavigation(),
         [token, setToken] = useState(''),
         [userInfo, setUserInfo] = useState({}),
         [userCashInfo, setUserCashInfo] = useState({}),
         [incomesOutomesSum, setIncomesOutomesSum] = useState(0),
-        [moves, setMoves] = useState([]);
+        [moves, setMoves] = useState([]),
+        [showCreateMovementDialog, setShowCreateMovementDialog] = useState(false);
 
     const checkUserToken = async ( token ) => {
         try {
@@ -58,13 +61,64 @@ const Dashboard = () => {
         try {
             const res = await getMoves(token);
             if(res.data !== undefined ){
-                // console.log(res.data);
+                res.data.sort((a, b) => {
+                    if (a.createdAt > b.createdAt) {
+                        return -1;
+                    }
+                    if (a.createdAt < b.createdAt) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 setMoves(res.data);
             }
         } catch (error) {
             Alert.alert('Error', "No se pudo obtener la información de tu cuenta.");
         }
+    },
+    handleCreateMove = async (amount, concept, type) => {
+        try {
+            const body = {
+                amount: amount,
+                concept: concept,
+                type: type,
+            }
+            const res = await createMove(token, body);
+            if(res.data !== undefined ){
+                setShowCreateMovementDialog(false);
+                handleGetUserCashInfo();
+                handleGetMoves();
+            }
+        } catch (error) {
+            Alert.alert('Error', "No se pudo crear el movimiento.");
+        }
     };
+
+    const handleSubmitMovement = (amount, concept) => {
+        if (amount.trim() === '' || concept.trim() === '') {
+            Alert.alert('Error', 'Ambos campos son obligatorios');
+            return;
+        }
+
+        const amountRegex = /^-?\d+(\.\d{1,2})?$/;
+        if (!amountRegex.test(amount)) {
+            Alert.alert('Error', 'El monto debe ser un número válido');
+            return;
+        }
+
+        if (Number(amount) === 0) {
+            Alert.alert('Error', 'El monto debe ser diferente de 0');
+            return;
+        }
+
+        let type = 'income';
+        if (amount < 0) {
+            amount = amount * -1;
+            type = 'outcome';
+        }
+
+        handleCreateMove(amount, concept, type);
+    }
 
     useEffect(() => {
         SecureStore.getItemAsync('token').then((token) => {
@@ -100,6 +154,9 @@ const Dashboard = () => {
                     </Text>
                     <ProgressBar progress={incomesOutomesSum ? userCashInfo.outcomes / incomesOutomesSum : 0}
                     animated style={styles.balance_info.bar} color="#fc4a41" unfilledColor="white" height={15} width={350}/>
+                    <View>
+                        <CustomButton title='Crear movimiento' onPress={() => setShowCreateMovementDialog(true)} type='white'/>
+                    </View>
                 </View>
                 <View style={styles.moves_container}>
                     <Text style={styles.moves_container.title}>Ultimos movimientos</Text>
@@ -119,6 +176,7 @@ const Dashboard = () => {
                     </ScrollView>
                 </View>
             </View>
+            <CreateMovementDialog show={showCreateMovementDialog} setShow={setShowCreateMovementDialog} handleSubmitMovement={handleSubmitMovement}/>
         </LinearGradient>
     )
 }
@@ -185,7 +243,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 500,
         backgroundColor: 'white',
-        marginTop: 50,
+        marginTop: 10,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         padding: 30,
@@ -240,72 +298,4 @@ const styles = StyleSheet.create({
     }
 });
 
-// const moves = [
-//     {
-//         id: 1,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'income'
-//     },
-//     {
-//         id: 2,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'outcome'
-//     },
-//     {
-//         id: 3,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'income'
-//     },
-//     {
-//         id: 4,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'outcome'
-//     },
-//     {
-//         id: 5,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'income'
-//     },
-//     {
-//         id: 6,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'outcome'
-//     },
-//     {
-//         id: 7,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'outcome'
-//     },
-//     {
-//         id: 8,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'income'
-//     },
-//     {
-//         id: 9,
-//         concept: 'Testing',
-//         date: '2021-09-01',
-//         amount: "1000.00",
-//         type: 'outcome'
-//     },
-// ]
-
 export default Dashboard;
-
-

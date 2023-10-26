@@ -1,44 +1,44 @@
 import { Formik } from 'formik';
 import React from 'react'
-import { Button, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, StyleSheet, Text, TextInput, View } from 'react-native';
 import CustomButton from './CustomButton';
 
-const EarningsPlanDialog = ({
+const CreateMovementDialog = ({
     show,
     setShow,
-    handleSubmitPlan
+    handleSubmitMovement
 }) => {
   return (
         <Modal visible={show} transparent>
             <View style={styles.container}>
                 <View style={styles.modal}>
-                    <Text style={styles.title}>Crear plan de ahorros</Text>
+                    <Text style={styles.title}>Crear movimiento</Text>
                     <Formik
                         initialValues={{
                             amount: '',
-                            duration: '',
+                            concept: '',
                         }}
                         onSubmit={(values) => {
-                            handleSubmitPlan(values.amount, values.duration);
+                            handleSubmitMovement(values.amount, values.concept);
                         }}
                     >
                         {
                             ({ handleChange, handleSubmit, values }) => (
                                 <View>
-                                    <Text style={styles.question}>¿Cuánto quieres ahorrar?</Text>
-                                    <TextInput 
-                                        placeholder="Monto" 
+                                    <Text style={styles.question}>¿De cuánto dinero es el movimiento?</Text>
+                                    <TextInput
+                                        placeholder="Monto (negativo si es gasto)"
                                         keyboardType='numeric'
                                         onChangeText={handleChange('amount')}
                                         value={values.amount}
                                         style={styles.field}
                                     />
-                                    <Text style={styles.question}>¿Cuánto quieres que dure tu plan?</Text>
-                                    <TextInput 
-                                        placeholder="Duración (semanas)" 
-                                        keyboardType='numeric'
-                                        onChangeText={handleChange('duration')}
-                                        value={values.duration}
+                                    <Text style={styles.question}>¿De qué es el movimiento?</Text>
+                                    <TextInput
+                                        placeholder="Concepto"
+                                        keyboardType='default'
+                                        onChangeText={handleChange('concept')}
+                                        value={values.concept}
                                         style={styles.field}
                                     />
 
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default EarningsPlanDialog;
+export default CreateMovementDialog;
