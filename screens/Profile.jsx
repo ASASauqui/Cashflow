@@ -245,7 +245,7 @@ const Profile = ({ navigation }) => {
                         style={{ flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'end', gap: 10, marginTop: 30, marginBottom: 100 }}
                     >
                         <FontAwesome name="power-off" size={24} color="red" />
-                        <Text style={{ fontSize: 20, color: 'red', fontFamily: 'Bold' }} onPress={handleLogout}>Cerrar sesión</Text>
+                        <Text style={{ fontSize: 18, color: 'red', fontFamily: 'Bold' }} onPress={handleLogout}>Cerrar sesión</Text>
                     </TouchableOpacity>
                 </View>
                 ) : (
