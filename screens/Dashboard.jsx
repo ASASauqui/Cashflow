@@ -159,10 +159,10 @@ const Dashboard = () => {
                     </View>
                 </View>
                 <View style={styles.moves_container}>
-                    <Text style={styles.moves_container.title}>Ultimos movimientos</Text>
+                    <Text style={styles.moves_container.title}>Últimos movimientos</Text>
                     <ScrollView style={styles.moves_container.moves}>
                         {
-                            moves.map((move) => (
+                            moves.slice(0, 10).map((move) => (
                                 <View key={move._id} style={styles.moves_container.moves.move}>
                                     <Text style={styles.moves_container.moves.move.date}>{move.createdAt.split('T')[0]}
                                     </Text>
@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
         height: 500,
         backgroundColor: 'white',
         marginTop: 10,
+        paddingBottom: 100,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         padding: 30,
