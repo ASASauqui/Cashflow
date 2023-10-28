@@ -171,6 +171,7 @@ const Profile = ({ navigation }) => {
                                         onChangeText={handleChange('phone')}
                                         value={values.phone}
                                         style={styles.field}
+                                        editable={false}
                                     />
                                     <Text style={styles.label}>Correo electrónico</Text>
                                     <TextInput
@@ -179,13 +180,13 @@ const Profile = ({ navigation }) => {
                                         value={values.email}
                                         style={styles.field}
                                     />
-                                    <Text style={styles.label}>Imagen</Text>
+                                    {/* <Text style={styles.label}>Imagen</Text>
                                     <TextInput
                                         keyboardType='default'
                                         onChangeText={handleChange('profileImage')}
                                         value={values.profileImage}
                                         style={styles.field}
-                                    />
+                                    /> */}
                                     <View>
                                         <CustomButton title='Guardar cambios' onPress={handleSubmit} type='blue' />
                                     </View>
